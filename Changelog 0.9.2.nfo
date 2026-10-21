@@ -1,0 +1,30 @@
+sPod Firmware 0.9.2
+Release date: 2026-06-09
+
+Summary
+-------
+Small UI polish release for Settings and navigation ergonomics.
+
+Added
+-----
+- Settings screen now displays the firmware version at the bottom.
+- Firmware version shown in Settings is read from the ESP-IDF app descriptor,
+  so it matches the actual image metadata.
+
+Changed
+-------
+- Back button touch target in the shared top bar is larger and easier to hit.
+- Top bar title alignment was adjusted to leave room for the larger Back button.
+- Firmware version source is centralized through the VERSION file and ESP-IDF
+  PROJECT_VER metadata.
+
+Fixed
+-----
+- Avoided keeping a second manually maintained runtime version header.
+- Reduced missed taps on Back navigation.
+
+Functional Notes
+----------------
+- The release export script will now package this release under Releases\0.9.2.
+- The generated release flasher will still flash bootloader, partition table,
+  and app image from the selected release folder.

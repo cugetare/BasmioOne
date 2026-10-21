@@ -1,0 +1,53 @@
+sPod Firmware 0.9.1
+Release date: 2026-06-09
+
+Summary
+-------
+This release stabilizes the audio path, improves SD-based catalog handling,
+adds Wi-Fi story upload support, and introduces release/version metadata.
+
+Added
+-----
+- Firmware version is now defined as 0.9.1 in the ESP-IDF project metadata.
+- Firmware logs its version at startup.
+- Wi-Fi story upload flow for adding story folders and MP3 chapters from a browser.
+- Browser-side cover extraction from MP3 ID3 APIC artwork during Wi-Fi upload.
+- Generated upload cover is converted to a compatible baseline JPEG cover.jpg.
+- Sound Enricher replaces the older loudness behavior for richer low-volume sound.
+- Sound Enricher amount profiles:
+  - Warm around 40%.
+  - Full around 75%.
+  - Punch around 100%.
+- Mono downmix control and equal-power stereo-to-mono mixing.
+- Playback timing diagnostics for SD read latency and I2S write timeouts.
+- Release export batch file for collecting firmware artifacts.
+
+Changed
+-------
+- MP3 playback decoder moved from minimp3 to Espressif esp_audio_codec simple decoder.
+- MP3 stream handling now preserves unconsumed decoder input between reads.
+- Sound Enricher now fades out as volume rises so it mainly affects low-volume playback.
+- Loudness API remains as a compatibility stub, but loudness processing is no longer used.
+- Tone controls and Sound Enricher are now separate stages in the playback path.
+- Catalog cover selection now prefers explicit cover files over generated ID3COVR files.
+- Existing ID3COVR files are no longer treated as explicit cover art candidates.
+- Upload workflow can generate cover.jpg automatically from embedded MP3 artwork.
+- MP3 playback log now reports stream sample rate, channel count, and bit depth.
+- Decoder ready log now reports esp_audio_codec instead of minimp3.
+
+Fixed
+-----
+- Fixed stereo-to-mono behavior that could sound like one channel was being favored.
+- Fixed possible frame-boundary loss in streamed MP3 decoding.
+- Reduced risk of intermittent stutter on high bitrate or VBR MP3 files.
+- Avoided marking playback as finished when decoder setup fails.
+- Avoided I2S output buffer underrun/corruption risk when decoded mono input is duplicated to stereo output.
+- Avoided repeated use of incompatible generated ID3COVR artwork when explicit cover.jpg is available.
+- Avoided progressive JPEG cover extraction crashes by moving compatibility conversion to upload time.
+
+Functional Notes
+----------------
+- For best cover compatibility, use Wi-Fi upload or provide an explicit cover.jpg/cover.png in the story folder.
+- Sound Enricher is intended to replace loudness. Test at low volumes first; at higher volumes it intentionally has less effect.
+- This release expects esp_audio_codec to be fetched by ESP-IDF Component Manager during configure/build.
+- A normal reconfigure/build should be enough after this release metadata change; full clean should only be needed if Component Manager or CMake cache gets stuck.

@@ -1,0 +1,22 @@
+# ESP-IDF build output
+/build/
+/c6_fw/build/
+/managed_components/
+/c6_fw/managed_components/
+sdkconfig.old
+
+# Release packages (published as GitHub Releases)
+/Releases/
+
+# .NET desktop app output
+/Desktop_app/bin/
+/Desktop_app/obj/
+
+# IDE / tools
+.vscode/
+.codex/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,8 +1,6 @@
 # ESP-IDF build output
 /build/
-/c6_fw/build/
 /managed_components/
-/c6_fw/managed_components/
 sdkconfig.old
 
 # Release packages (published as GitHub Releases)
